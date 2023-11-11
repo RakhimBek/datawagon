@@ -9,6 +9,7 @@ from settings import HOST
 from settings import PORT
 from settings import PROJECT_NAME
 from stations import find_all_stations
+from stations import find_history
 from stations import find_paths
 from stations import find_stations
 from trains import find_all_trains_at_station
@@ -65,6 +66,15 @@ async def stations():
     :return: все возможный станции
     """
     return find_all_stations()
+
+
+@app.get("/api/stations/hostory")
+async def stations(wagon_id):
+    """
+Пройденные маршрут вагона
+    :return: все возможный станции
+    """
+    return find_history(int(wagon_id))
 
 
 @app.get("/api/trains")

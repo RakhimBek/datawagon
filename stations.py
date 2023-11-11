@@ -1,8 +1,9 @@
-import pandas as pd
-import networkx as nx
-import matplotlib.pyplot as plt
-from pydantic import BaseModel
+import random
 from functools import reduce
+
+import matplotlib.pyplot as plt
+import networkx as nx
+from pydantic import BaseModel
 
 from stations_dao import fetch_stations
 from stations_dao import fetch_stations_net
@@ -14,15 +15,16 @@ def show(network, graph):
 
 # описание станции
 class Station(BaseModel):
-    id: int # идентификатор станции
-    latitude: float # широта
-    longitude: float # долгота
+    id: int  # идентификатор станции
+    latitude: float  # широта
+    longitude: float  # долгота
+
 
 # ребро
 class Edge(BaseModel):
-    start: Station # стартовая станция
-    end: Station # станция прибытия
-    distance: float # расстояние между станциями в км
+    start: Station  # стартовая станция
+    end: Station  # станция прибытия
+    distance: float  # расстояние между станциями в км
 
 
 # todo: broken fixme!
@@ -56,6 +58,22 @@ def find_all_stations():
         longitude = row[2]
         if longitude != None and latitude != None:
             stations.append(Station(id=station_id, longitude=float(longitude), latitude=float(latitude)))
+
+    return stations
+
+
+def find_history(wagon_id):
+    """
+Получить список сех станции
+    :return:
+    """
+    stations = []
+    for i in range(2, 10):
+        stations.append(Station(
+            id=random.randint(10, 20),
+            longitude=float(random.random() * i),
+            latitude=float(random.random() * i)
+        ))
 
     return stations
 
