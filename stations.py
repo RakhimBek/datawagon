@@ -24,7 +24,32 @@ class Edge(BaseModel):
     distance: float
 
 
-def find(start_station_id, end_station_id):
+# todo: broken fixme!
+def find_stations(left, top, right, down):
+    stations = {}
+    for row in fetch_stations():
+        station_id = row[0]
+        latitude = row[1]
+        longitude = row[2]
+        if is_inside(left, top, right, down, longitude, latitude):
+            stations[station_id] = Station(id=station_id, longitude=float(longitude), latitude=float(latitude))
+
+    edges = []
+    for row in fetch_stations_net():
+        start_id = row[0]
+        end_id = row[1]
+        # todo: make sql instead of this
+        if stations.keys().__contains__(start_id) and stations.keys().__contains__(end_id):
+            edges.append(Edge(start=stations.get(start_id), end=stations.get(end_id), distance=row[2]))
+
+
+# left, right - longitude
+# top, down - latitude
+def is_inside(left, top, right, down, point_longitude, point_latitude):
+    return point_longitude != None and point_latitude != None and left > point_longitude and point_longitude < right and point_latitude > down and point_latitude < top;
+
+
+def find_paths(start_station_id, end_station_id):
     stations = {}
     for row in fetch_stations():
         station_id = row[0]
@@ -66,4 +91,4 @@ def find(start_station_id, end_station_id):
 
 
 if __name__ == "__main__":
-    find(7741, 22294)
+    find_paths(7741, 22294)

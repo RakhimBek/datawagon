@@ -4,7 +4,8 @@ import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from stations import find
+from stations import find_paths
+from stations import find_stations
 
 app = FastAPI(
     title='wishfulmap',
@@ -26,9 +27,14 @@ async def root():
     return {"message": "Hello, World!"}
 
 
+@app.get("/api/stations/path")
+async def stations_path(start=7741, end=22308):
+    return find_paths(int(start), int(end))
+
+
 @app.get("/api/stations")
-async def root(start=7741, end=22308):
-    return find(int(start), int(end))
+async def stations(left, top, right, down):
+    return find_stations(float(left), float(top), float(right), float(down))
 
 
 if __name__ == '__main__':
