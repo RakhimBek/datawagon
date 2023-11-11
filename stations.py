@@ -65,7 +65,8 @@ def find_paths(start_station_id, end_station_id):
         start = row[0]
         end = row[1]
         distance = row[2]
-        graph.add_edge(start, end, distance=distance)
+        if (start in stations.keys() and end in stations.keys()):
+            graph.add_edge(start, end, distance=distance)
 
     try:
         edged_paths = []
@@ -74,11 +75,17 @@ def find_paths(start_station_id, end_station_id):
             left = simple_path[0]
             for right in simple_path[1:]:
                 distance = graph.get_edge_data(left, right)
-                edged_path.append(Edge(
-                    start=stations.get(left),
-                    end=stations.get(right),
-                    distance=distance['distance']
-                ))
+                start = stations.get(left)
+                end = stations.get(right)
+
+                if start != None and end != None:
+                    edged_path.append(Edge(
+                        start=start,
+                        end=end,
+                        distance=distance['distance']
+                    ))
+                else:
+                    print(f"Impossible! {left}|{start} - {end}")
 
                 left = right
             edged_paths.append(edged_path)
