@@ -16,7 +16,7 @@ API решения задачи Хакатона АО ПГК (https://datawagon.
 
 ### Clone git repo
 ```
-git clone git@github.com:RakhimBek/normapi.git
+git clone git@github.com:RakhimBek/sufferingback.git
 ```
 
 ### Copy environment variables file
