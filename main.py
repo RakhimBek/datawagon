@@ -4,14 +4,18 @@ import uvicorn
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
+from settings import DEBUG
+from settings import HOST
+from settings import PORT
+from settings import PROJECT_NAME
 from stations import find_all_stations
 from stations import find_paths
 from stations import find_stations
 from trains import find_all_trains_at_station
 
 app = FastAPI(
-    title='wishfulmap',
-    debug=True,
+    title=PROJECT_NAME,
+    debug=DEBUG,
     version='1.0',
 )
 
@@ -74,4 +78,4 @@ async def stations(station):
 
 
 if __name__ == '__main__':
-    uvicorn.run(app, host='localhost', port=8080)
+    uvicorn.run(app, host=HOST, port=PORT)
