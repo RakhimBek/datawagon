@@ -1,17 +1,4 @@
 import sqlite3
-from pydantic import BaseModel
-
-
-class Station(BaseModel):
-    id: int
-    latitude: float
-    longitude: float
-
-
-class StationEdge(BaseModel):
-    start: Station
-    end: Station
-    distance: float
 
 
 def fetch_stations():
@@ -64,14 +51,3 @@ def fetch_stations_net_with_positions():
         print(e)
     finally:
         connection.close()
-
-
-def wrap(fetched_data):
-    edges = []
-    for row in fetched_data:
-        edges.append(StationEdge(
-            start=Station(id=row[0], latitude=row[1], longitude=row[2]),
-            end=Station(id=row[3], latitude=row[4], longitude=row[5]),
-            distance=row[6]
-        ))
-    return edges
