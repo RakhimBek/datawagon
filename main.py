@@ -28,7 +28,7 @@ async def root():
 
 @app.get("/api/stations")
 async def root(start=7741, end=22308):
-    return find(start, end)
+    return find(int(start), int(end))
 
 
 if __name__ == '__main__':
