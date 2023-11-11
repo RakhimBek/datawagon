@@ -3,16 +3,17 @@ from pydantic import BaseModel
 
 
 # описание вагона
-class Wagen(BaseModel):
+class Wagon(BaseModel):
     operdate: str  # дата операции; работы с вагоном
-    num: int  # номер вагона
+    train_num: int  # номер вагона
+    dislocation: int  # текущая позиция вагона (совпадает с позиция поезда его несущего)
     destination: int  # пункт назначения вагона
 
 
 # описание поезда
 class Train(BaseModel):
-    index: int  # индекс вагона
-    num: int  # номер вагона
+    index: str  # индекс вагона
+    num: str  # номер поезда
     departure: int  # пункт исходного отправления поезда
     destination: int  # пункт назначения поезда
     dislocation: int  # текущая позиция
@@ -30,17 +31,20 @@ def find_all_trains_at_station(station):
 
 
 def random_train(station):
+    num = str(random.randint(10, 30))
+    departure = random.randint(10, 30)
+    destination = random.randint(10, 30)
     return Train(
-        index=random.randint(10, 30),
-        num=random.randint(10, 30),
-        departure=random.randint(10, 30),
-        destination=random.randint(10, 30),
+        index=f"{departure}-{num}-{destination}",
+        num=num,
+        departure=departure,
+        destination=destination,
         dislocation=station,
         wagens=[
-            Wagen(operdate='22-11-12', num=1, destination=random.randint(10, 30)),
-            Wagen(operdate='22-11-12', num=1, destination=random.randint(10, 30)),
-            Wagen(operdate='22-21-12', num=1, destination=random.randint(10, 30)),
-            Wagen(operdate='22-21-22', num=1, destination=random.randint(10, 30)),
-            Wagen(operdate='22-21-32', num=1, destination=random.randint(10, 30)),
+            Wagon(train_num=num, operdate='22-11-12', num=1, dislocation=station, destination=random.randint(10, 30)),
+            Wagon(train_num=num, operdate='22-11-12', num=1, dislocation=station, destination=random.randint(10, 30)),
+            Wagon(train_num=num, operdate='22-21-12', num=1, dislocation=station, destination=random.randint(10, 30)),
+            Wagon(train_num=num, operdate='22-21-22', num=1, dislocation=station, destination=random.randint(10, 30)),
+            Wagon(train_num=num, operdate='22-21-32', num=1, dislocation=station, destination=random.randint(10, 30)),
         ]
     )
