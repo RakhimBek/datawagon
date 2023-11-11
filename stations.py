@@ -44,6 +44,18 @@ def find_stations(left, top, right, down):
             edges.append(Edge(start=stations.get(start_id), end=stations.get(end_id), distance=row[2]))
 
 
+def find_all_stations():
+    stations = []
+    for row in fetch_stations():
+        station_id = row[0]
+        latitude = row[1]
+        longitude = row[2]
+        if longitude != None and latitude != None:
+            stations.append(Station(id=station_id, longitude=float(longitude), latitude=float(latitude)))
+
+    return stations
+
+
 # left, right - longitude
 # top, down - latitude
 def is_inside(left, top, right, down, point_longitude, point_latitude):

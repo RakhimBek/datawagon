@@ -6,6 +6,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from stations import find_paths
 from stations import find_stations
+from stations import find_all_stations
 
 app = FastAPI(
     title='wishfulmap',
@@ -32,9 +33,14 @@ async def stations_path(start=134, end=155, candidates_constraint=3):
     return find_paths(int(start), int(end), int(candidates_constraint))
 
 
-@app.get("/api/stations")
+@app.get("/api/stations/net")
 async def stations(left, top, right, down):
     return find_stations(float(left), float(top), float(right), float(down))
+
+
+@app.get("/api/stations")
+async def stations():
+    return find_all_stations()
 
 
 if __name__ == '__main__':
