@@ -48,12 +48,12 @@ def init_sqllite_stations_net():
 
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS STATIONS_NET (
-            START_ID INTEGER,
-            END_ID INTEGER,
+            STARTID INTEGER,
+            ENDID INTEGER,
             DISTANCE REAL,
-            PRIMARY KEY (START_ID, END_ID),
-            FOREIGN KEY(START_ID) REFERENCES STATIONS(ID),
-            FOREIGN KEY(END_ID) REFERENCES STATIONS(ID)
+            PRIMARY KEY (STARTID, ENDID),
+            FOREIGN KEY(STARTID) REFERENCES STATIONS(ID),
+            FOREIGN KEY(ENDID) REFERENCES STATIONS(ID)
         )
         ''')
 
@@ -68,7 +68,7 @@ def init_sqllite_stations_net():
                 end_id = row['END_CODE']
                 distance = row['LEN']
 
-                cursor.execute('INSERT INTO STATIONS_NET(START_ID, END_ID, DISTANCE) VALUES (?, ?, ?)',
+                cursor.execute('INSERT INTO STATIONS_NET(STARTID, ENDID, DISTANCE) VALUES (?, ?, ?)',
                                (int(start_id), int(end_id), float(distance)))
 
         connection.commit()
