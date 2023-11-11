@@ -1,10 +1,14 @@
 import sqlite3
+
 import pandas as pd
 
 
 # todo: move to Redis or PostgreSQL someday ?
 
 def init_sqllite_stations():
+    """
+Инициализация таблицы "Координаты станций."
+    """
     connection = sqlite3.connect('sqll.db')
     try:
         cursor = connection.cursor()
@@ -25,9 +29,9 @@ def init_sqllite_stations():
         with pd.ExcelFile(stations_path) as xls:
             stations_df = pd.read_excel(xls, "Sheet 1")
             for index, row in stations_df.iterrows():
-                station_id = row['ST_ID']
-                latitude = row['LATITUDE']
-                longitude = row['LONGITUDE']
+                station_id = row['ST_ID']  # ST_ID – станция ЖД сети
+                latitude = row['LATITUDE']  # LATITUDE – широта
+                longitude = row['LONGITUDE']  # LONGITUDE – долгота.
 
                 if latitude != None and longitude != None:
                     cursor.execute('INSERT INTO STATIONS(ID, LATITUDE, LONGITUDE) VALUES (?, ?, ?)',
@@ -42,15 +46,18 @@ def init_sqllite_stations():
 
 
 def init_sqllite_stations_net():
+    """
+Инициализация таблицы "Графы ж/д сети."
+    """
     connection = sqlite3.connect('sqll.db')
     try:
         cursor = connection.cursor()
 
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS STATIONS_NET (
-            STARTID INTEGER,
-            ENDID INTEGER,
-            DISTANCE REAL,
+            STARTID INTEGER,   --- START_CODE – станция начала ребра графа
+            ENDID INTEGER,   --- END_CODE – станция окончания ребра графа
+            DISTANCE REAL,   --- LEN – длительность ребра в км.
             PRIMARY KEY (STARTID, ENDID),
             FOREIGN KEY(STARTID) REFERENCES STATIONS(ID),
             FOREIGN KEY(ENDID) REFERENCES STATIONS(ID)
