@@ -67,6 +67,13 @@ def is_inside(left, top, right, down, point_longitude, point_latitude):
 
 
 def find_paths(start_station_id, end_station_id, paths_constraint):
+    """
+Поиск возможных путей между двумя станциями
+    :param start_station_id: стартовая станция
+    :param end_station_id: конечная станция
+    :param paths_constraint: максимальное число маршрутов для поиска
+    :return: коллекция маршрутов
+    """
     stations = {}
     for row in fetch_stations():
         station_id = row[0]
