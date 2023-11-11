@@ -97,5 +97,32 @@ def find_paths(start_station_id, end_station_id):
         return {}
 
 
+# for tests
+def find_plural_paths():
+    stations = set()
+    for row in fetch_stations():
+        station_id = row[0]
+        stations.add(station_id)
+
+    graph = nx.Graph()
+    ids = set()
+
+    for row in fetch_stations_net():
+        start = row[0]
+        end = row[1]
+
+        if (start in stations and end in stations):
+            ids.add(start)
+            ids.add(end)
+            graph.add_edge(start, end)
+
+    for left in ids:
+        for right in ids:
+            paths = list(nx.all_simple_paths(graph, source=left, target=right))
+            if len(paths) > 7:
+                print(f"--> {left} -- {right}")
+                break
+
+
 if __name__ == "__main__":
     find_paths(7741, 22294)
