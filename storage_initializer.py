@@ -2,6 +2,8 @@ import sqlite3
 import pandas as pd
 
 
+# todo: move to Redis or PostgreSQL someday ?
+
 def init_sqllite_stations():
     connection = sqlite3.connect('sqll.db')
     try:
@@ -49,7 +51,9 @@ def init_sqllite_stations_net():
             START_ID INTEGER,
             END_ID INTEGER,
             DISTANCE REAL,
-            PRIMARY KEY (START_ID, END_ID)
+            PRIMARY KEY (START_ID, END_ID),
+            FOREIGN KEY(START_ID) REFERENCES STATIONS(ID),
+            FOREIGN KEY(END_ID) REFERENCES STATIONS(ID)
         )
         ''')
 
