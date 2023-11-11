@@ -28,8 +28,8 @@ async def root():
 
 
 @app.get("/api/stations/path")
-async def stations_path(start=7741, end=22308):
-    return find_paths(int(start), int(end))
+async def stations_path(start=134, end=155, candidates_constraint=3):
+    return find_paths(int(start), int(end), int(candidates_constraint))
 
 
 @app.get("/api/stations")

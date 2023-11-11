@@ -2,6 +2,7 @@ import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
 from pydantic import BaseModel
+from functools import reduce
 
 from stations_dao import fetch_stations
 from stations_dao import fetch_stations_net
@@ -49,7 +50,7 @@ def is_inside(left, top, right, down, point_longitude, point_latitude):
     return point_longitude != None and point_latitude != None and left > point_longitude and point_longitude < right and point_latitude > down and point_latitude < top;
 
 
-def find_paths(start_station_id, end_station_id):
+def find_paths(start_station_id, end_station_id, paths_constraint):
     stations = {}
     for row in fetch_stations():
         station_id = row[0]
@@ -88,7 +89,14 @@ def find_paths(start_station_id, end_station_id):
                     print(f"Impossible! {left}|{start} - {end}")
 
                 left = right
-            edged_paths.append(edged_path)
+
+            edged_paths.append({
+                "stations": edged_path,
+                "distance": reduce(lambda l, r: l + r.distance, edged_path, 0)
+            })
+
+            if len(edged_paths) >= paths_constraint:
+                return edged_paths
 
         return edged_paths
 
@@ -125,4 +133,4 @@ def find_plural_paths():
 
 
 if __name__ == "__main__":
-    find_paths(7741, 22294)
+    find_paths(7741, 22294, 3)
