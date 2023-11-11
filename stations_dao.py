@@ -2,6 +2,10 @@ import sqlite3
 
 
 def fetch_stations():
+    """
+Получить все существующие станции
+    :return: список кортежей
+    """
     connection = sqlite3.connect('sqll.db')
     try:
         cursor = connection.cursor()
@@ -16,6 +20,10 @@ def fetch_stations():
 
 
 def fetch_stations_net():
+    """
+Получить граф связей существующих станции
+    :return:
+    """
     connection = sqlite3.connect('sqll.db')
     try:
         cursor = connection.cursor()
@@ -29,6 +37,10 @@ def fetch_stations_net():
 
 
 def fetch_stations_net_with_positions():
+    """
+Получить граф связей существующих станции с их описанием
+    :return:
+    """
     connection = sqlite3.connect('sqll.db')
     try:
         cursor = connection.cursor()
