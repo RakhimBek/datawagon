@@ -121,7 +121,7 @@ def find_paths(start_station_id, end_station_id, paths_constraint):
         return {}
 
 
-# for tests
+# Для нахождения вершин с множеством различных путей
 def find_plural_paths():
     stations = set()
     for row in fetch_stations():
@@ -149,4 +149,4 @@ def find_plural_paths():
 
 
 if __name__ == "__main__":
-    find_paths(7741, 22294, 3)
+    find_plural_paths()
