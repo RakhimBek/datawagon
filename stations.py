@@ -12,17 +12,17 @@ def show(network, graph):
     network.draw(graph, pos=nx.spring_layout(graph), node_size=2)
     plt.savefig("Graph.png", format="PNG")
 
-
+# описание станции
 class Station(BaseModel):
-    id: int
-    latitude: float
-    longitude: float
+    id: int # идентификатор станции
+    latitude: float # широта
+    longitude: float # долгота
 
-
+# ребро
 class Edge(BaseModel):
-    start: Station
-    end: Station
-    distance: float
+    start: Station # стартовая станция
+    end: Station # станция прибытия
+    distance: float # расстояние между станциями в км
 
 
 # todo: broken fixme!
@@ -45,6 +45,10 @@ def find_stations(left, top, right, down):
 
 
 def find_all_stations():
+    """
+Получить список сех станции
+    :return:
+    """
     stations = []
     for row in fetch_stations():
         station_id = row[0]
