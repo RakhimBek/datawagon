@@ -85,6 +85,49 @@ def init_sqllite_stations_net():
         connection.close()
 
 
+def init_sqllite_dislocations():
+    connection = sqlite3.connect('sqll.db')
+    try:
+        cursor = connection.cursor()
+
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS DISLOCATIONS (
+            WAGNUM INTEGER,
+            OPERDATE INTEGER,
+            STDISL INTEGER,
+            STDEST INTEGER,
+            TRAININDEX VARCHAR 
+        )
+        ''')
+
+        cursor.execute('CREATE INDEX IF NOT EXISTS IDX_WAGNUM ON DISLOCATIONS (WAGNUM)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS IDX_OPERDATE ON DISLOCATIONS (OPERDATE)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS IDX_STDISL ON DISLOCATIONS (STDISL)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS IDX_STDEST ON DISLOCATIONS (STDEST)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS IDX_TRAININDEX ON DISLOCATIONS (TRAININDEX)')
+
+        # tood: to settings file
+        stations_path = '~/Downloads/disl_hackaton.xlsx'
+
+        with pd.ExcelFile(stations_path) as xls:
+            stations_df = pd.read_excel(xls, "Sheet 1")
+            for index, row in stations_df.iterrows():
+                wagnum = row['WAGNUM']
+                operdate = row['OPERDATE']
+                stiddisl = row['ST_ID_DISL']
+                stiddest = row['ST_ID_DEST']
+                trainindex = row['TRAIN_INDEX']
+
+                cursor.execute(
+                    'INSERT INTO DISLOCATIONS(WAGNUM, OPERDATE, STDISL, STDEST, TRAININDEX) VALUES (?, ?, ?, ?, ?)',
+                    (int(wagnum), str(operdate), int(stiddisl), int(stiddest), str(trainindex)))
+
+        connection.commit()
+    except Exception as e:
+        print(e)
+    finally:
+        connection.close()
+
+
 if __name__ == '__main__':
-    init_sqllite_stations()
-    init_sqllite_stations_net()
+    init_sqllite_dislocations()
