@@ -70,3 +70,6 @@ from (
 
 
 
+
+-- trail of a train
+select * from DISLOCATIONS where TRAINNUM=1 order by TRAINNUM, datetime(OPERDATE)
