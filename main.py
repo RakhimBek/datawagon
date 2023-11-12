@@ -78,13 +78,13 @@ async def stations(wagon_id):
 
 
 @app.get("/api/trains")
-async def stations(station):
+async def stations(station, operdate='22-11-12'):
     """
 Все поезда на данной станции
     :param station: номер станций
     :return: все поезда на данной станций
     """
-    return find_all_trains_at_station(int(station))
+    return find_all_trains_at_station(int(station), operdate)
 
 
 if __name__ == '__main__':

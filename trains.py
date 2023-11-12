@@ -68,18 +68,18 @@ def find_all_trains_at_station_still_too_slow(station):
     return trains.values()
 
 
-def find_all_trains_at_station(station):
+def find_all_trains_at_station(station, operdate):
 
     return [
-        random_train(station),
-        random_train(station),
-        random_train(station),
-        random_train(station),
-        random_train(station),
+        random_train(station, operdate),
+        random_train(station, operdate),
+        random_train(station, operdate),
+        random_train(station, operdate),
+        random_train(station, operdate),
     ]
 
 
-def random_train(station):
+def random_train(station, operdate):
     num = str(random.randint(10, 30))
     departure = random.randint(10, 30)
     destination = random.randint(10, 30)
@@ -90,10 +90,10 @@ def random_train(station):
         destination=destination,
         dislocation=station,
         wagens=[
-            Wagon(train_num=num, operdate='22-11-12', num=1, dislocation=station, destination=random.randint(10, 30)),
-            Wagon(train_num=num, operdate='22-11-12', num=1, dislocation=station, destination=random.randint(10, 30)),
-            Wagon(train_num=num, operdate='22-21-12', num=1, dislocation=station, destination=random.randint(10, 30)),
-            Wagon(train_num=num, operdate='22-21-22', num=1, dislocation=station, destination=random.randint(10, 30)),
-            Wagon(train_num=num, operdate='22-21-32', num=1, dislocation=station, destination=random.randint(10, 30)),
+            Wagon(train_num=num, operdate=operdate, num=1, dislocation=station, destination=random.randint(10, 30)),
+            Wagon(train_num=num, operdate=operdate, num=1, dislocation=station, destination=random.randint(10, 30)),
+            Wagon(train_num=num, operdate=operdate, num=1, dislocation=station, destination=random.randint(10, 30)),
+            Wagon(train_num=num, operdate=operdate, num=1, dislocation=station, destination=random.randint(10, 30)),
+            Wagon(train_num=num, operdate=operdate, num=1, dislocation=station, destination=random.randint(10, 30)),
         ]
     )
