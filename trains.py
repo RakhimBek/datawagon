@@ -1,5 +1,6 @@
 import random
 from pydantic import BaseModel
+from stations_dao import fetch_dislocations
 
 
 # описание вагона
@@ -20,7 +21,55 @@ class Train(BaseModel):
     wagens: list  # список вагонов
 
 
+# @unsed @deprecated
+def find_all_trains_at_station_still_too_slow(station):
+    """
+Поиск поездов в данной станции
+
+    :param station:
+    :return:
+    """
+    print('!!!!')
+    dislocations = fetch_dislocations()
+    print(dislocations)
+
+    wagons = {}
+    for disl in dislocations:
+        trainnum = disl[7]  # TRAINNUM
+        wagons[trainnum] = []
+
+    for disl in dislocations:
+        wagnum = disl[0]  # WAGNUM
+        operdate = disl[1]  # OPERDATE
+        stdisl = disl[2]  # STDISL
+        stdest = disl[3]  # STDEST
+        trainnum = disl[7]  # TRAINNUM
+
+        wagons[trainnum].append(Wagon(
+            train_num=trainnum, operdate=operdate, num=wagnum, dislocation=stdisl, destination=stdest
+        ))
+
+    trains = {}
+    for disl in dislocations:
+        trainindex = disl[4]  # TRAININDEX
+        departure = disl[5]  # DEPARTURE
+        destination = disl[6]  # DESTINATION
+        trainnum = disl[7]  # TRAINNUM
+
+        trains[trainnum] = Train(
+            index=trainindex,
+            num=trainnum,
+            departure=departure,
+            destination=destination,
+            dislocation=station,
+            wagens=wagons[trainnum]
+        )
+
+    return trains.values()
+
+
 def find_all_trains_at_station(station):
+
     return [
         random_train(station),
         random_train(station),

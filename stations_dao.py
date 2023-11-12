@@ -63,3 +63,28 @@ def fetch_stations_net_with_positions():
         print(e)
     finally:
         connection.close()
+
+# still too slow
+def fetch_dislocations():
+    """
+Получить граф связей существующих станции с их описанием
+    :return:
+    """
+    connection = sqlite3.connect('sqll.db')
+    try:
+        cursor = connection.cursor()
+        cursor.execute('''
+        select DISTINCT *
+        from DISLOCATIONS
+        where STDISL == 1771
+          and datetime(OPERDATE) == datetime('2023-08-31 23:49:00');
+        ''')
+
+        return cursor.fetchall()
+
+    except Exception as e:
+        print(e)
+    finally:
+        connection.close()
+
+
