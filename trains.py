@@ -91,9 +91,9 @@ def random_train(station, operdate):
         dislocation=station,
         wagens=[
             Wagon(train_num=num, operdate=operdate, num=1, dislocation=station, destination=random.randint(10, 30)),
-            Wagon(train_num=num, operdate=operdate, num=1, dislocation=station, destination=random.randint(10, 30)),
-            Wagon(train_num=num, operdate=operdate, num=1, dislocation=station, destination=random.randint(10, 30)),
-            Wagon(train_num=num, operdate=operdate, num=1, dislocation=station, destination=random.randint(10, 30)),
-            Wagon(train_num=num, operdate=operdate, num=1, dislocation=station, destination=random.randint(10, 30)),
+            Wagon(train_num=num, operdate=operdate, num=2, dislocation=station, destination=random.randint(10, 30)),
+            Wagon(train_num=num, operdate=operdate, num=3, dislocation=station, destination=random.randint(10, 30)),
+            Wagon(train_num=num, operdate=operdate, num=4, dislocation=station, destination=random.randint(10, 30)),
+            Wagon(train_num=num, operdate=operdate, num=77, dislocation=station, destination=random.randint(10, 30)),
         ]
     )
